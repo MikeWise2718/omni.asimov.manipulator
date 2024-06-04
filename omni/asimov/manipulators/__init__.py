@@ -6,4 +6,9 @@
 # distribution of this software and related documentation without an express
 # license agreement from NVIDIA CORPORATION is strictly prohibited.
 #
-from omni.isaac.manipulators.single_manipulator import SingleManipulator
+try:
+  # for Isaac Sim 2023.1.1
+  from omni.isaac.manipulators.single_manipulator import SingleManipulator
+except:
+  # for Isaac Sim 4.0.0
+  from omni.isaac.manipulators.manipulators.single_manipulator import SingleManipulator

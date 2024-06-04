@@ -83,7 +83,11 @@ class SurfaceGripper(Gripper):
         virtual_gripper_props.stiffness = self._kp
         virtual_gripper_props.damping = self._kd
         virtual_gripper_props.disableGravity = self._disable_gravity
-        tr = _dynamic_control.Transform()
+        ver = "4.0.0"
+        if ver == "4.0.0":
+            tr = omni.physics.tensors.Transform()
+        else:
+            tr = _dynamic_control.Transform()
         if self._direction == "x":
             tr.p.x = self._translate
         elif self._direction == "y":
@@ -93,7 +97,10 @@ class SurfaceGripper(Gripper):
         else:
             carb.log_error("Direction specified for the surface gripper doesn't exist")
         virtual_gripper_props.offset = tr
-        virtual_gripper = Surface_Gripper(self._dc_interface)
+        if ver == "4.0.0":
+            virtual_gripper = Surface_Gripper()
+        else:
+            virtual_gripper = Surface_Gripper(self._dc_interface)
         virtual_gripper.initialize(virtual_gripper_props)
         self._virtual_gripper = virtual_gripper
         if self._default_state is None:
@@ -105,14 +112,16 @@ class SurfaceGripper(Gripper):
         if not self.is_closed():
             self._virtual_gripper.close()
         if not self.is_closed():
-            carb.log_warn("gripper didn't close successfully")
+            is_closed = self.is_closed()
+            carb.log_warn(f"gripper didn't close successfully - is closed:{is_closed}")
         return
 
     def open(self) -> None:
         """Applies actions to the articulation that opens the gripper (ex: to release an object held)."""
         result = self._virtual_gripper.open()
         if not result:
-            carb.log_warn("gripper didn't open successfully")
+            is_closed = self.is_closed()
+            carb.log_warn(f"gripper didn't open successfully - is closed:{is_closed}")
 
         return
 

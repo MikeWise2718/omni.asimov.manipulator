@@ -176,7 +176,7 @@ class PickPlaceController(BaseController):
            tppx = position_target[0]
            tppy = position_target[1]
            tppz = position_target[2]
-           print(f"step:{self._nfwdstep} t:{self._t:.4f}  dt:{dt}  tppos:{tppx:.2f} {tppy:.2f} {tppz:.2f}")
+           # print(f"step:{self._nfwdstep} t:{self._t:.4f}  dt:{dt}  tppos:{tppx:.2f} {tppy:.2f} {tppz:.2f}")
         # self._t += self._events_dt[self._event]
         self._t += dt
         nphases = len(self._events_dt)

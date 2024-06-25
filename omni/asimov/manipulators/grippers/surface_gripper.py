@@ -13,6 +13,7 @@ from omni.isaac.core.utils.types import ArticulationAction
 from omni.isaac.dynamic_control import _dynamic_control
 from omni.asimov.manipulators.grippers.gripper import Gripper
 from omni.isaac.surface_gripper._surface_gripper import Surface_Gripper, Surface_Gripper_Properties
+from omni.isaac.version import get_version
 
 
 class SurfaceGripper(Gripper):
@@ -83,8 +84,8 @@ class SurfaceGripper(Gripper):
         virtual_gripper_props.stiffness = self._kp
         virtual_gripper_props.damping = self._kd
         virtual_gripper_props.disableGravity = self._disable_gravity
-        ver = "4.0.0"
-        if ver == "4.0.0":
+        ver = get_version()[0]
+        if ver == '4.0.0':
             tr = omni.physics.tensors.Transform()
         else:
             tr = _dynamic_control.Transform()
